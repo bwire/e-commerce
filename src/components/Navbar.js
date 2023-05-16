@@ -11,7 +11,7 @@ import { useUserContext } from '../context/user_context';
 const Nav = () => {
   return (
     <NavContainer>
-      <div class='nav-center'>
+      <div className='nav-center'>
         <div className='nav-header'>
           <Link to='/'>
             <img src={logo} alt='comfy sloth' />

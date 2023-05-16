@@ -11,12 +11,12 @@ const CartButtons = () => {
     <Wrapper className='cart-btn-wrapper'>
       <Link className='cart-btn' to='/cart'>
         Cart
-        <span class='cart-container'>
+        <span className='cart-container'>
           <FaShoppingCart />
-          <span class='cart-value'>0</span>
+          <span className='cart-value'>0</span>
         </span>
       </Link>
-      <button type='button' class='auth-btn'>
+      <button type='button' className='auth-btn'>
         Login
         <FaUserPlus />
       </button>
