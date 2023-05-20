@@ -7,8 +7,8 @@ import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 const AboutPage = () => {
   return (
     <main>
+      <PageHero title='about' />
       <div class='section-center'>
-        <PageHero />
         <Wrapper className='page section section-center'>
           <img src={aboutImg} alt='nice desk' />
           <article>
