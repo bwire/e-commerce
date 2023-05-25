@@ -18,7 +18,7 @@ const Services = () => {
             aperiam necessitatibus?
           </p>
         </article>
-        <div class='services-center'>
+        <div className='services-center'>
           {services.map(({ id, icon, title, text }) => (
             <article key={id} className='service'>
               <span className='icon'>{icon}</span>
