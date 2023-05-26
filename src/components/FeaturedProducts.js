@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useProductsContext } from '../context/products_context';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Error from './Error';
 import Loading from './Loading';
@@ -21,7 +20,6 @@ const FeaturedProducts = () => {
     return <Error />;
   }
 
-  console.log(products);
   return (
     <Wrapper className='section'>
       <div className='title'>
