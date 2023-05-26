@@ -1,7 +1,7 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useReducer } from 'react';
+import React, { useContext, useEffect, useReducer, useCallback } from 'react';
 import reducer from '../reducers/products_reducer';
-import { products_url as url } from '../utils/constants';
+import { products_url, single_product_url } from '../utils/constants';
 import {
   SIDEBAR_OPEN,
   SIDEBAR_CLOSE,
@@ -19,6 +19,9 @@ const initialState = {
   productsError: false,
   products: [],
   featuredProducts: [],
+  singleProductLoading: false,
+  singleProductError: false,
+  singleProduct: null,
 };
 
 const ProductsContext = React.createContext();
@@ -29,14 +32,15 @@ export const ProductsProvider = ({ children }) => {
   const openSidebar = () => {
     dispatch({ type: SIDEBAR_OPEN });
   };
+
   const closeSidebar = () => {
     dispatch({ type: SIDEBAR_CLOSE });
   };
+
   const fetchProducts = async () => {
-    console.log('fetching products');
+    dispatch({ type: GET_PRODUCTS_BEGIN });
     try {
-      dispatch({ type: GET_PRODUCTS_BEGIN });
-      const response = await axios.get(url);
+      const response = await axios.get(products_url);
       dispatch({
         type: GET_PRODUCTS_SUCCESS,
         payload: { products: response.data },
@@ -48,13 +52,35 @@ export const ProductsProvider = ({ children }) => {
     }
   };
 
+  const fetchProduct = useCallback(async (productId) => {
+    dispatch({ type: GET_SINGLE_PRODUCT_BEGIN });
+    try {
+      const response = await axios.get(`${single_product_url}${productId}`);
+
+      dispatch({
+        type: GET_SINGLE_PRODUCT_SUCCESS,
+        payload: { product: response.data },
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_SINGLE_PRODUCT_ERROR,
+      });
+    }
+  }, []);
+
   useEffect(() => {
     fetchProducts();
   }, []);
 
   return (
     <ProductsContext.Provider
-      value={{ ...state, openSidebar, closeSidebar, fetchProducts }}
+      value={{
+        ...state,
+        openSidebar,
+        closeSidebar,
+        fetchProducts,
+        fetchProduct,
+      }}
     >
       {children}
     </ProductsContext.Provider>
