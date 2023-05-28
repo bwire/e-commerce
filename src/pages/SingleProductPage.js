@@ -37,7 +37,7 @@ const SingleProductPage = () => {
     }
   });
 
-  if (isLoading) {
+  if (isLoading || !product) {
     return <Loading />;
   }
 
@@ -45,7 +45,19 @@ const SingleProductPage = () => {
     return <Error />;
   }
 
-  const { id: sku, name, price, description, stock, company } = product;
+  const {
+    id: sku,
+    name,
+    price,
+    description,
+    stock,
+    company,
+    images,
+    stars,
+    reviews,
+  } = product;
+
+  console.log('images', product);
 
   return (
     <Wrapper>
@@ -56,26 +68,26 @@ const SingleProductPage = () => {
           </>
         }
       />
-      <div class='section section-center page'>
+      <div className='section section-center page'>
         <Link className='btn' to='/products'>
           back to products
         </Link>
-        <div class='product-center'>
-          <ProductImages />
-          <section class='content'>
+        <div className='product-center'>
+          <ProductImages images={images} />
+          <section className='content'>
             <h2>{name}</h2>
-            <Stars />
-            <h5 class='price'>{formatPrice(price)}</h5>
-            <p class='desc'>{description}</p>
-            <p class='info'>
+            <Stars stars={stars} reviews={reviews} />
+            <h5 className='price'>{formatPrice(price)}</h5>
+            <p className='desc'>{description}</p>
+            <p className='info'>
               <span>Available : </span>
               {stock > 0 ? 'in stock' : 'out of stock'}
             </p>
-            <p class='info'>
+            <p className='info'>
               <span>SKU : </span>
               {sku}
             </p>
-            <p class='info'>
+            <p className='info'>
               <span>Brand : </span>
               {company}
             </p>
