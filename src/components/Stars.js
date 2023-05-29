@@ -17,7 +17,7 @@ const Stars = ({ stars, reviews }) => {
   return (
     <Wrapper>
       <div className='stars'>{starsArray}</div>
-      <p class='reviews'>{`(${reviews} customer reviews)`}</p>
+      <p className='reviews'>{`(${reviews} customer reviews)`}</p>
     </Wrapper>
   );
 };
