@@ -1,10 +1,24 @@
-import React from 'react'
-import styled from 'styled-components'
-import { Filters, ProductList, Sort, PageHero } from '../components'
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { Filters, ProductList, Sort, PageHero } from '../components';
 
 const ProductsPage = () => {
-  return <h4>products page</h4>
-}
+  const [gridView, setGridView] = useState(true);
+  return (
+    <main>
+      <PageHero title='/ products' />
+      <Wrapper className='page'>
+        <div className='section-center products'>
+          <Filters />
+          <div>
+            <Sort />
+            <ProductList gridView={gridView} />
+          </div>
+        </div>
+      </Wrapper>
+    </main>
+  );
+};
 
 const Wrapper = styled.div`
   .products {
@@ -17,6 +31,6 @@ const Wrapper = styled.div`
       grid-template-columns: 200px 1fr;
     }
   }
-`
+`;
 
-export default ProductsPage
+export default ProductsPage;
