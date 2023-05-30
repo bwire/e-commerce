@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Filters, ProductList, Sort, PageHero } from '../components';
 
 const ProductsPage = () => {
-  const [gridView, setGridView] = useState(true);
   return (
     <main>
       <PageHero title='/ products' />
@@ -12,7 +11,7 @@ const ProductsPage = () => {
           <Filters />
           <div>
             <Sort />
-            <ProductList gridView={gridView} />
+            <ProductList />
           </div>
         </div>
       </Wrapper>
