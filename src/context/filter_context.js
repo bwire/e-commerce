@@ -24,12 +24,16 @@ export const FilterProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { products } = useProductsContext();
 
+  const toggleView = () => {
+    dispatch({ type: state.grid_view ? SET_LISTVIEW : SET_GRIDVIEW });
+  };
+
   useEffect(() => {
     dispatch({ type: LOAD_PRODUCTS, payload: { products } });
   }, [products]);
 
   return (
-    <FilterContext.Provider value={{ ...state }}>
+    <FilterContext.Provider value={{ ...state, toggleView }}>
       {children}
     </FilterContext.Provider>
   );
