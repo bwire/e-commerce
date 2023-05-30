@@ -3,15 +3,15 @@ import { useFilterContext } from '../context/filter_context';
 import { BsFillGridFill, BsList } from 'react-icons/bs';
 import styled from 'styled-components';
 const Sort = () => {
-  const { grid_view, filtered_products, switchView } = useFilterContext();
+  const { grid_view, filtered_products, toggleView } = useFilterContext();
 
   return (
     <Wrapper>
       <div className='btn-container'>
-        <button className={grid_view ? 'active' : null} onClick={switchView}>
+        <button className={grid_view ? 'active' : null} onClick={toggleView}>
           <BsFillGridFill />
         </button>
-        <button className={grid_view ? null : 'active'} onClick={switchView}>
+        <button className={grid_view ? null : 'active'} onClick={toggleView}>
           <BsList />
         </button>
       </div>
