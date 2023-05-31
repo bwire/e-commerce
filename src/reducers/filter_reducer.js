@@ -35,6 +35,25 @@ const filter_reducer = (state, action) => {
       sort: action.payload.sort,
     };
   }
+  if (action.type === SORT_PRODUCTS) {
+    const { sort, filtered_products } = state;
+    const sortedProducts = [...filtered_products];
+    const asc = sort === 'price-lowest' || sort === 'name-a';
+    const field =
+      sort === 'price-lowest' || sort === 'price-highest' ? 'price' : 'name';
+
+    console.log(asc, sort, field);
+    return {
+      ...state,
+      filtered_products: sortedProducts.sort((a, b) => {
+        if (asc) {
+          return a[field] < b[field] ? -1 : a[field] > b[field] ? 1 : 0;
+        } else {
+          return a[field] > b[field] ? -1 : a[field] < b[field] ? 1 : 0;
+        }
+      }),
+    };
+  }
   throw new Error(`No Matching "${action.type}" - action type`);
 };
 
