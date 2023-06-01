@@ -8,7 +8,7 @@ const ProductList = ({ gridView }) => {
 
   if (products.length < 1) {
     return (
-      <h5 style={{ transform: 'none' }}>
+      <h5 style={{ textTransform: 'none' }}>
         Sorry, no products matched your search...
       </h5>
     );

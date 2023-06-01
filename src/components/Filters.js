@@ -1,12 +1,68 @@
-import React from 'react'
-import styled from 'styled-components'
-import { useFilterContext } from '../context/filter_context'
-import { getUniqueValues, formatPrice } from '../utils/helpers'
-import { FaCheck } from 'react-icons/fa'
+import React from 'react';
+import styled from 'styled-components';
+import { useFilterContext } from '../context/filter_context';
+import { getUniqueValues, formatPrice } from '../utils/helpers';
+import { FaCheck } from 'react-icons/fa';
 
 const Filters = () => {
-  return <h4>filters</h4>
-}
+  const { filters, updateFilters } = useFilterContext();
+  const { text, price } = filters;
+  return (
+    <Wrapper>
+      <div className='content'>
+        <form onSubmit={(e) => e.preventDefault()}>
+          <div className='form-control'>
+            <input
+              type='text'
+              name='text'
+              value={text}
+              className='search-input'
+              placeholder='search'
+              onChange={updateFilters}
+            />
+          </div>
+          <div className='form-control'>
+            <h5>category</h5>
+            <button type='button' name='category' className='active'>
+              all
+            </button>
+          </div>
+          <div className='form-control'>
+            <h5>company</h5>
+            {/* <select name='company' className='company' onChange={() => {}}>
+              <option value='all'>all</option>
+            </select> */}
+          </div>
+          <div className='form-control'>
+            <h5>colors</h5>
+            <button name='color' data-color='all' className='all-btn active'>
+              all
+            </button>
+          </div>
+          <div className='form-control'>
+            <h5>price</h5>
+            <p className='price'>{formatPrice(price)}</p>
+            {/* <input
+              type='range'
+              name='price'
+              min={0}
+              max={maxPrice}
+              value={price}
+              onChange={() => {}}
+            /> */}
+          </div>
+          <div className='form-control shipping'>
+            <label htmlFor='shipping'>free shipping</label>
+            <input type='checkbox' name='shipping' id='shipping' />
+          </div>
+        </form>
+        <button type='button' className='clear-btn'>
+          clear filters
+        </button>
+      </div>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.section`
   .form-control {
@@ -106,6 +162,6 @@ const Wrapper = styled.section`
       top: 1rem;
     }
   }
-`
+`;
 
-export default Filters
+export default Filters;

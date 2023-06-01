@@ -11,10 +11,13 @@ import {
 
 const filter_reducer = (state, action) => {
   if (action.type === LOAD_PRODUCTS) {
+    const products = action.payload.products;
+    const maxPrice = products.reduce((a, v) => (a < v.price ? v.price : a), 0);
     return {
       ...state,
       all_products: [...action.payload.products],
       filtered_products: [...action.payload.products],
+      filters: { ...state.filters, maxPrice, price: maxPrice },
     };
   }
   if (action.type === SET_LISTVIEW) {
@@ -42,7 +45,6 @@ const filter_reducer = (state, action) => {
     const field =
       sort === 'price-lowest' || sort === 'price-highest' ? 'price' : 'name';
 
-    console.log(asc, sort, field);
     return {
       ...state,
       filtered_products: sortedProducts.sort((a, b) => {
@@ -52,6 +54,26 @@ const filter_reducer = (state, action) => {
           return a[field] > b[field] ? -1 : a[field] < b[field] ? 1 : 0;
         }
       }),
+    };
+  }
+
+  if (action.type === UPDATE_FILTERS) {
+    return {
+      ...state,
+      filters: { ...state.filters, ...action.payload },
+    };
+  }
+
+  if (action.type === FILTER_PRODUCTS) {
+    const { filters, all_products: products } = state;
+    const { text } = filters;
+    const filtered = [...products].filter((p) =>
+      text ? p.name.toLowerCase().includes(text.toLowerCase()) : true
+    );
+
+    return {
+      ...state,
+      filtered_products: filtered,
     };
   }
   throw new Error(`No Matching "${action.type}" - action type`);
