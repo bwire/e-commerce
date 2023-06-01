@@ -5,8 +5,12 @@ import { getUniqueValues, formatPrice } from '../utils/helpers';
 import { FaCheck } from 'react-icons/fa';
 
 const Filters = () => {
-  const { filters, updateFilters } = useFilterContext();
-  const { text, price } = filters;
+  const { all_products, filters, updateFilters } = useFilterContext();
+  const { text, category, price, color } = filters;
+  const categories = getUniqueValues(all_products, 'category');
+  const companies = getUniqueValues(all_products, 'company');
+  const colors = getUniqueValues(all_products, 'colors');
+
   return (
     <Wrapper>
       <div className='content'>
@@ -23,34 +27,61 @@ const Filters = () => {
           </div>
           <div className='form-control'>
             <h5>category</h5>
-            <button type='button' name='category' className='active'>
-              all
-            </button>
+            {['all', ...categories].map((c, i) => (
+              <button
+                key={i}
+                type='button'
+                name='category'
+                className={c === category ? 'active' : null}
+              >
+                {c}
+              </button>
+            ))}
           </div>
           <div className='form-control'>
             <h5>company</h5>
-            {/* <select name='company' className='company' onChange={() => {}}>
-              <option value='all'>all</option>
-            </select> */}
+            <select name='company' className='company' onChange={() => {}}>
+              {['all', ...companies].map((c, i) => (
+                <option key={i} value='all'>
+                  {c}
+                </option>
+              ))}
+            </select>
           </div>
           <div className='form-control'>
             <h5>colors</h5>
-            <button name='color' data-color='all' className='all-btn active'>
-              all
-            </button>
+            <div className='colors'>
+              <button
+                name='color'
+                data-color='all'
+                className={'all' === color ? 'all-btn active' : 'all-btn'}
+              >
+                all
+              </button>
+              {colors.map((c, i) => (
+                <button
+                  key={i}
+                  data-color={c}
+                  style={{ background: c }}
+                  className={c === color ? 'color-btn active' : 'color-btn'}
+                >
+                  {c === color && <FaCheck />}
+                </button>
+              ))}
+            </div>
           </div>
-          <div className='form-control'>
+          {/* <div className='form-control'>
             <h5>price</h5>
             <p className='price'>{formatPrice(price)}</p>
-            {/* <input
+            <input
               type='range'
               name='price'
               min={0}
               max={maxPrice}
               value={price}
               onChange={() => {}}
-            /> */}
-          </div>
+            />
+          </div> */}
           <div className='form-control shipping'>
             <label htmlFor='shipping'>free shipping</label>
             <input type='checkbox' name='shipping' id='shipping' />

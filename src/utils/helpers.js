@@ -6,4 +6,6 @@ export const formatPrice = (price) => {
   return formatter.format(price / 100);
 };
 
-export const getUniqueValues = () => {};
+export const getUniqueValues = (array, field) => [
+  ...new Set(array.flatMap((e) => e[field])),
+];
