@@ -6,7 +6,7 @@ import { FaCheck } from 'react-icons/fa';
 
 const Filters = () => {
   const { all_products, filters, updateFilters } = useFilterContext();
-  const { text, category, price, color } = filters;
+  const { text, category, color } = filters;
   const categories = getUniqueValues(all_products, 'category');
   const companies = getUniqueValues(all_products, 'company');
   const colors = getUniqueValues(all_products, 'colors');
@@ -32,7 +32,9 @@ const Filters = () => {
                 key={i}
                 type='button'
                 name='category'
+                value={c}
                 className={c === category ? 'active' : null}
+                onClick={updateFilters}
               >
                 {c}
               </button>

@@ -66,10 +66,12 @@ const filter_reducer = (state, action) => {
 
   if (action.type === FILTER_PRODUCTS) {
     const { filters, all_products: products } = state;
-    const { text } = filters;
-    const filtered = [...products].filter((p) =>
-      text ? p.name.toLowerCase().includes(text.toLowerCase()) : true
-    );
+    const { text, category } = filters;
+    const filtered = [...products]
+      .filter((p) =>
+        text ? p.name.toLowerCase().includes(text.toLowerCase()) : true
+      )
+      .filter((p) => (category === 'all' ? true : p.category === category));
 
     return {
       ...state,
