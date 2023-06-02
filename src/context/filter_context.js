@@ -44,6 +44,7 @@ export const FilterProvider = ({ children }) => {
   };
 
   const updateFilters = (e) => {
+    console.log(e.target.name, e.target.value);
     dispatch({
       type: UPDATE_FILTERS,
       payload: { [e.target.name]: e.target.value },
