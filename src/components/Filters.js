@@ -6,7 +6,7 @@ import { FaCheck } from 'react-icons/fa';
 
 const Filters = () => {
   const { all_products, filters, updateFilters } = useFilterContext();
-  const { text, category, company, color } = filters;
+  const { text, category, company, color, maxPrice, price } = filters;
   const categories = getUniqueValues(all_products, 'category');
   const companies = getUniqueValues(all_products, 'company');
   const colors = getUniqueValues(all_products, 'colors');
@@ -80,7 +80,7 @@ const Filters = () => {
               ))}
             </div>
           </div>
-          {/* <div className='form-control'>
+          <div className='form-control'>
             <h5>price</h5>
             <p className='price'>{formatPrice(price)}</p>
             <input
@@ -89,9 +89,9 @@ const Filters = () => {
               min={0}
               max={maxPrice}
               value={price}
-              onChange={() => {}}
+              onChange={updateFilters}
             />
-          </div> */}
+          </div>
           <div className='form-control shipping'>
             <label htmlFor='shipping'>free shipping</label>
             <input type='checkbox' name='shipping' id='shipping' />
