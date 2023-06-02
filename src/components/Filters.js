@@ -68,9 +68,12 @@ const Filters = () => {
               {colors.map((c, i) => (
                 <button
                   key={i}
+                  name='color'
                   data-color={c}
                   style={{ background: c }}
+                  value={c}
                   className={c === color ? 'color-btn active' : 'color-btn'}
+                  onClick={updateFilters}
                 >
                   {c === color && <FaCheck />}
                 </button>
