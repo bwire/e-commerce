@@ -52,6 +52,10 @@ export const FilterProvider = ({ children }) => {
     });
   };
 
+  const clearFilters = () => {
+    dispatch({ type: CLEAR_FILTERS });
+  };
+
   useEffect(() => {
     dispatch({ type: LOAD_PRODUCTS, payload: { products } });
   }, [products]);
@@ -63,7 +67,7 @@ export const FilterProvider = ({ children }) => {
 
   return (
     <FilterContext.Provider
-      value={{ ...state, toggleView, changeSort, updateFilters }}
+      value={{ ...state, toggleView, changeSort, updateFilters, clearFilters }}
     >
       {children}
     </FilterContext.Provider>
