@@ -22,7 +22,6 @@ const initialState = {
     company: 'all',
     category: 'all',
     color: 'all',
-    minPrice: 0,
     maxPrice: 0,
     price: 0,
     shipping: false,
@@ -44,10 +43,12 @@ export const FilterProvider = ({ children }) => {
   };
 
   const updateFilters = (e) => {
-    console.log(e.target.name, e.target.value);
+    const name = e.target.name;
+    const value = name === 'shipping' ? e.target.checked : e.target.value;
+
     dispatch({
       type: UPDATE_FILTERS,
-      payload: { [e.target.name]: e.target.value },
+      payload: { [name]: value },
     });
   };
 
