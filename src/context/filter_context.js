@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useReducer, useCallback } from 'react';
+import React, { useEffect, useContext, useReducer } from 'react';
 import reducer from '../reducers/filter_reducer';
 import {
   LOAD_PRODUCTS,
@@ -44,7 +44,12 @@ export const FilterProvider = ({ children }) => {
 
   const updateFilters = (e) => {
     const name = e.target.name;
-    const value = name === 'shipping' ? e.target.checked : e.target.value;
+    const value =
+      name === 'shipping'
+        ? e.target.checked
+        : name === 'price'
+        ? Number(e.target.value)
+        : e.target.value;
 
     dispatch({
       type: UPDATE_FILTERS,
@@ -53,7 +58,7 @@ export const FilterProvider = ({ children }) => {
   };
 
   const clearFilters = () => {
-    dispatch({ type: CLEAR_FILTERS });
+    dispatch({ type: CLEAR_FILTERS, payload: { products } });
   };
 
   useEffect(() => {
