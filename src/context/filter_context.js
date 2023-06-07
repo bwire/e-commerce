@@ -58,7 +58,7 @@ export const FilterProvider = ({ children }) => {
   };
 
   const clearFilters = () => {
-    dispatch({ type: CLEAR_FILTERS, payload: { products } });
+    dispatch({ type: CLEAR_FILTERS });
   };
 
   useEffect(() => {

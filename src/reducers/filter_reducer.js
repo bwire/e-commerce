@@ -84,19 +84,14 @@ const filter_reducer = (state, action) => {
   }
 
   if (action.type === CLEAR_FILTERS) {
-    const products = action.payload.products;
-    const maxPrice = products.reduce((a, v) => (a < v.price ? v.price : a), 0);
     return {
       ...state,
-      all_products: [...action.payload.products],
-      filtered_products: [...action.payload.products],
       filters: {
         text: '',
         company: 'all',
         category: 'all',
         color: 'all',
-        maxPrice,
-        price: maxPrice,
+        price: state.filters.maxPrice,
         shipping: false,
       },
     };
