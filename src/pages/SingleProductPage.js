@@ -54,7 +54,6 @@ const SingleProductPage = () => {
     images,
     stars,
     reviews,
-    colors,
   } = product;
 
   return (
