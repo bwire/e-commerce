@@ -1,5 +1,5 @@
 import About from './AboutPage';
-import Cart from './AuthWrapper';
+import Cart from './CartPage';
 import Checkout from './CheckoutPage';
 import Error from './ErrorPage';
 import Home from './HomePage';
