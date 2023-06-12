@@ -9,12 +9,24 @@ import {
 const cart_reducer = (state, action) => {
   if (action.type === ADD_TO_CART) {
     const { id, amount, color, product } = action.payload;
-    const item = state.cart.find((i) => i.id === id + color);
+    const item = state.cart.find((i) => i.id === `${id}-${color}`);
 
     if (item) {
+      const newCart = state.cart.filter((i) => i.id !== item.id);
+      return {
+        ...state,
+        cart: [
+          ...newCart,
+          {
+            ...item,
+            amount:
+              item.amount + amount > item.max ? item.max : item.amount + amount,
+          },
+        ],
+      };
     } else {
       const newItem = {
-        id: id + color,
+        id: `${id}-${color}`,
         name: product.name,
         color,
         amount,
