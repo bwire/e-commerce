@@ -8,8 +8,13 @@ import {
   COUNT_CART_TOTALS,
 } from '../actions';
 
+const getLocalStorageCart = () => {
+  const cart = localStorage.getItem('cart');
+  return JSON.parse(cart) || [];
+};
+
 const initialState = {
-  cart: [],
+  cart: getLocalStorageCart(),
   total_items: 0,
   total_amount: 0,
   shipping_fee: 0,
@@ -32,6 +37,10 @@ export const CartProvider = ({ children }) => {
   const toggleAmount = (id, value) => {};
 
   const clearCart = () => {};
+
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(state.cart));
+  }, [state.cart]);
 
   return (
     <CartContext.Provider
