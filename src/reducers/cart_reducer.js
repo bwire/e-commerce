@@ -39,10 +39,45 @@ const cart_reducer = (state, action) => {
       return {
         ...state,
         cart: [...state.cart, newItem],
-        total_items: state.total_items + amount,
-        total_amount: state.total_amount + amount * item.price,
       };
     }
+  }
+  if (action.type === TOGGLE_CART_ITEM_AMOUNT) {
+    const { id, value } = action.payload;
+    return {
+      ...state,
+      cart: state.cart.map((item) =>
+        item.id !== id ? item : { ...item, amount: value }
+      ),
+    };
+  }
+  if (action.type === CLEAR_CART) {
+    return {
+      ...state,
+      cart: [],
+      total_items: 0,
+      total_amount: 0,
+      shipping_fee: 0,
+    };
+  }
+  if (action.type === REMOVE_CART_ITEM) {
+    const cart = state.cart;
+    return {
+      ...state,
+      cart: [...cart.filter((item) => item.id !== action.payload.id)],
+    };
+  }
+  if (action.type === COUNT_CART_TOTALS) {
+    const [total_items, total_amount] = state.cart.reduce(
+      ([ti, ta], e) => [ti + e.amount, ta + e.amount * e.price],
+      [0, 0]
+    );
+    return {
+      ...state,
+      total_items,
+      total_amount,
+      shipping_fee: 534,
+    };
   }
 
   throw new Error(`No Matching "${action.type}" - action type`);

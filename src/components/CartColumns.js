@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const CartColumns = () => {
   return (
     <Wrapper>
-      <div class='content'>
+      <div className='content'>
         <h5>Item</h5>
         <h5>Price</h5>
         <h5>Quantity</h5>

@@ -1,12 +1,38 @@
-import React from 'react'
-import styled from 'styled-components'
-import { formatPrice } from '../utils/helpers'
-import AmountButtons from './AmountButtons'
-import { FaTrash } from 'react-icons/fa'
-import { useCartContext } from '../context/cart_context'
-const CartItem = () => {
-  return <h4>cart item</h4>
-}
+import React from 'react';
+import styled from 'styled-components';
+import { formatPrice } from '../utils/helpers';
+import AmountButtons from './AmountButtons';
+import { FaTrash } from 'react-icons/fa';
+import { useCartContext } from '../context/cart_context';
+
+const CartItem = ({ item }) => {
+  const { toggleAmount, removeItem } = useCartContext();
+  const { id, name, image, color, price, amount, max } = item;
+
+  const increase = () => toggleAmount(id, amount === max ? max : amount + 1);
+  const decrease = () => toggleAmount(id, amount === 1 ? 1 : amount - 1);
+
+  return (
+    <Wrapper>
+      <div className='title'>
+        <img src={image} alt={name} />
+        <div>
+          <h5 className='name'>{name}</h5>
+          <p className='color'>
+            color : <span style={{ background: { color } }}></span>
+          </p>
+          <h5 className='price-small'>{formatPrice(price)}</h5>
+        </div>
+      </div>
+      <h5 className='price'>{formatPrice(price)}</h5>
+      <AmountButtons amount={amount} increase={increase} decrease={decrease} />
+      <h5 className='subtotal'>{formatPrice(price * amount)}</h5>
+      <button className='remove-btn' onClick={() => removeItem(id)}>
+        <FaTrash />
+      </button>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.article`
   .subtotal {
@@ -142,6 +168,6 @@ const Wrapper = styled.article`
       }
     }
   }
-`
+`;
 
-export default CartItem
+export default CartItem;
