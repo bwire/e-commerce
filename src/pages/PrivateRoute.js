@@ -1,10 +1,10 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
-import { useAuth0 } from '@auth0/auth0-react';
-// will remove later
+import { Route } from 'react-router-dom';
 import { useUserContext } from '../context/user_context';
+import { Home } from '.';
 
-const PrivateRoute = () => {
-  return <h4>Private Route</h4>;
+const PrivateRoute = ({ children, ...rest }) => {
+  const { isAuthenticated } = useUserContext();
+  return <Route {...rest}>{isAuthenticated ? children : <Home />}</Route>;
 };
 export default PrivateRoute;

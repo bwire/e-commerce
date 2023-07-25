@@ -12,7 +12,7 @@ const CheckoutPage = () => {
       <Wrapper className='page '>
         <div className='empty'>
           <h2>Your cart is empty</h2>
-          <Link to='/products' class='btn'>
+          <Link to='/products' className='btn'>
             fill it
           </Link>
         </div>

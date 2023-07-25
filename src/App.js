@@ -8,6 +8,7 @@ import {
   Home,
   Products,
   SingleProduct,
+  Private,
 } from './pages';
 
 import { Navbar, Sidebar, Footer } from './components';
@@ -27,9 +28,9 @@ function App() {
         <Route exact path='/cart'>
           <Cart />
         </Route>
-        <Route exact path='/checkout'>
+        <Private exact path='/checkout'>
           <Checkout />
-        </Route>
+        </Private>
         <Route exact path='/products'>
           <Products />
         </Route>
