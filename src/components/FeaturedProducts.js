@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Error from './Error';
 import Loading from './Loading';
 import Product from './Product';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 const FeaturedProducts = () => {
   const {
@@ -31,6 +32,9 @@ const FeaturedProducts = () => {
           <Product key={p.id} {...p} />
         ))}
       </div>
+      <Link to='/products' class='btn'>
+        all products
+      </Link>
     </Wrapper>
   );
 };
