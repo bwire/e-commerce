@@ -11,14 +11,14 @@ import {
 import { useCartContext } from '../context/cart_context';
 import { useUserContext } from '../context/user_context';
 import { formatPrice } from '../utils/helpers';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
 const CheckoutForm = () => {
   const { cart, shipping_fee, total_amount, clearCart } = useCartContext();
   const { user } = useUserContext();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
   const [processing, setProcessing] = useState('');
@@ -53,7 +53,6 @@ const CheckoutForm = () => {
       );
 
       setClientSecret(data.clientSecret);
-      console.log('Fucking secret', data.clientSecret);
     } catch (error) {
       console.log(error.response);
     }
@@ -83,7 +82,7 @@ const CheckoutForm = () => {
       setSucceeded(true);
       setTimeout(() => {
         clearCart();
-        history.push('/');
+        navigate('/');
       }, 10000);
     }
   };
