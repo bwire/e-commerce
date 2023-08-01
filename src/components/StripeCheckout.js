@@ -16,12 +16,14 @@ import { useHistory } from 'react-router-dom';
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
 const CheckoutForm = () => {
-  const { cart } = useCartContext();
+  const { cart, shipping_fee, total_amount, clearCart } = useCartContext();
+  const { user } = useUserContext();
+  const history = useHistory();
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
   const [processing, setProcessing] = useState('');
   const [disabled, setDisabled] = useState(true);
-  const [clientSecret, useClientSecret] = useState('');
+  const [clientSecret, setClientSecret] = useState('');
   const stripe = useStripe();
   const elements = useElements();
 
@@ -44,12 +46,47 @@ const CheckoutForm = () => {
   };
 
   const createPaymentIntent = useCallback(async () => {
-    console.log('form stripe checkout');
-  }, []);
+    try {
+      const { data } = await axios.post(
+        '/.netlify/functions/create-payment-intent',
+        JSON.stringify({ cart, total_amount, shipping_fee })
+      );
 
-  const handleChange = async (event) => {};
+      setClientSecret(data.clientSecret);
+      console.log('Fucking secret', data.clientSecret);
+    } catch (error) {
+      console.log(error.response);
+    }
+  }, [cart, shipping_fee, total_amount]);
 
-  const handleSubmit = async (event) => {};
+  const handleChange = async (event) => {
+    setDisabled(event.empty);
+    setError(event.error ? event.error.message : '');
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setProcessing(true);
+
+    const payload = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: elements.getElement(CardElement),
+      },
+    });
+
+    if (payload.error) {
+      setError(`Payment failed ${payload.error.message}`);
+      setProcessing(false);
+    } else {
+      setError(null);
+      setProcessing(false);
+      setSucceeded(true);
+      setTimeout(() => {
+        clearCart();
+        history.push('/');
+      }, 10000);
+    }
+  };
 
   useEffect(() => {
     createPaymentIntent();
@@ -57,7 +94,20 @@ const CheckoutForm = () => {
 
   return (
     <div>
-      <form id='payment-form'>
+      {succeeded ? (
+        <article>
+          <h4>Thank you</h4>
+          <h4>Your payment was successful!</h4>
+          <h4>Redirect to hame page shortly</h4>
+        </article>
+      ) : (
+        <article>
+          <h4>Hello, {user && user.name}</h4>
+          <p>Your total is {formatPrice(shipping_fee + total_amount)}</p>
+          <p>Test card number: 4242 4242 4242 4242</p>
+        </article>
+      )}
+      <form id='payment-form' onSubmit={handleSubmit}>
         <CardElement
           id='card-element'
           options={cardStyle}
